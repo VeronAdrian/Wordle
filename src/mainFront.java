@@ -71,32 +71,8 @@ public class mainFront {
 		frmWungsdle.getContentPane().add(menu);
 		menu.setLayout(null);
 		
-		JPanel ES = new JPanel();
-		ES.setVisible(false);
-		ES.setLayout(null);
-		ES.setBackground(new Color(17, 149, 207));
-		ES.setBounds(0, 111, 200, 399);
-		menu.add(ES);
-		
-		JButton btnPlayButton_1 = new JButton("Jugar");
-		btnPlayButton_1.setFont(new Font("Arial", Font.BOLD, 12));
-		btnPlayButton_1.setBounds(40, 30, 110, 50);
-		ES.add(btnPlayButton_1);
-		
-		JButton btnHowToPlayButton_1 = new JButton("ComoJugar");
-		btnHowToPlayButton_1.setFont(new Font("Arial", Font.BOLD, 12));
-		btnHowToPlayButton_1.setBounds(40, 110, 110, 50);
-		ES.add(btnHowToPlayButton_1);
-		
-		JButton btnQuitButton_1 = new JButton("Salir");
-		btnQuitButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		btnQuitButton_1.setFont(new Font("Arial", Font.BOLD, 12));
-		btnQuitButton_1.setBounds(40, 190, 110, 50);
-		ES.add(btnQuitButton_1);
+		JPanel gamemodeEN = new JPanel();
+		gamemodeEN.setVisible(false);
 		
 		JPanel EN = new JPanel();
 		EN.setVisible(false);
@@ -106,6 +82,11 @@ public class mainFront {
 		EN.setLayout(null);
 		
 		JButton btnPlayButton = new JButton("Play");
+		btnPlayButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gamemodeEN.setVisible(true);
+			}
+		});
 		btnPlayButton.setFont(new Font("Arial", Font.BOLD, 12));
 		btnPlayButton.setBounds(40, 30, 110, 50);
 		EN.add(btnPlayButton);
@@ -113,6 +94,7 @@ public class mainFront {
 		JButton btnHowToPlayButton = new JButton("How To Play");
 		btnHowToPlayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gamemodeEN.setVisible(false);
 				
 			}
 		});
@@ -129,6 +111,84 @@ public class mainFront {
 		btnQuitButton.setFont(new Font("Arial", Font.BOLD, 12));
 		btnQuitButton.setBounds(40, 190, 110, 50);
 		EN.add(btnQuitButton);
+		gamemodeEN.setLayout(null);
+		gamemodeEN.setBackground(new Color(17, 149, 207));
+		gamemodeEN.setBounds(200, 0, 200, 510);
+		menu.add(gamemodeEN);
+		
+		JButton btnMode1ButtonEN = new JButton("5 Letters");
+		btnMode1ButtonEN.setFont(new Font("Arial", Font.BOLD, 12));
+		btnMode1ButtonEN.setBounds(41, 140, 110, 50);
+		gamemodeEN.add(btnMode1ButtonEN);
+		
+		JButton btnMode2ButtonEN = new JButton("7 Letters");
+		btnMode2ButtonEN.setFont(new Font("Arial", Font.BOLD, 12));
+		btnMode2ButtonEN.setBounds(41, 220, 110, 50);
+		gamemodeEN.add(btnMode2ButtonEN);
+		
+		JButton btnContratiempoEN = new JButton("Time Trial");
+		btnContratiempoEN.setFont(new Font("Arial", Font.BOLD, 12));
+		btnContratiempoEN.setBounds(41, 300, 110, 50);
+		gamemodeEN.add(btnContratiempoEN);
+		
+		JPanel gamemodeES = new JPanel();
+		gamemodeES.setVisible(false);
+		
+		JPanel ES = new JPanel();
+		ES.setVisible(false);
+		ES.setLayout(null);
+		ES.setBackground(new Color(17, 149, 207));
+		ES.setBounds(0, 111, 200, 399);
+		menu.add(ES);
+		
+		JButton btnPlayButton_1 = new JButton("Jugar");
+		btnPlayButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gamemodeES.setVisible(true);
+			}
+		});
+		btnPlayButton_1.setFont(new Font("Arial", Font.BOLD, 12));
+		btnPlayButton_1.setBounds(40, 30, 110, 50);
+		ES.add(btnPlayButton_1);
+		
+		JButton btnHowToPlayButton_1 = new JButton("ComoJugar");
+		btnHowToPlayButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gamemodeES.setVisible(false);
+			}
+		});
+		btnHowToPlayButton_1.setFont(new Font("Arial", Font.BOLD, 12));
+		btnHowToPlayButton_1.setBounds(40, 110, 110, 50);
+		ES.add(btnHowToPlayButton_1);
+		
+		JButton btnQuitButton_1 = new JButton("Salir");
+		btnQuitButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnQuitButton_1.setFont(new Font("Arial", Font.BOLD, 12));
+		btnQuitButton_1.setBounds(40, 190, 110, 50);
+		ES.add(btnQuitButton_1);
+		gamemodeES.setBackground(new Color(17, 149, 207));
+		gamemodeES.setBounds(200, 0, 200, 510);
+		menu.add(gamemodeES);
+		gamemodeES.setLayout(null);
+		
+		JButton btnMode1Button = new JButton("5 Letras");
+		btnMode1Button.setFont(new Font("Arial", Font.BOLD, 12));
+		btnMode1Button.setBounds(41, 140, 110, 50);
+		gamemodeES.add(btnMode1Button);
+		
+		JButton btnMode2Button = new JButton("7 Ketras");
+		btnMode2Button.setFont(new Font("Arial", Font.BOLD, 12));
+		btnMode2Button.setBounds(41, 220, 110, 50);
+		gamemodeES.add(btnMode2Button);
+		
+		JButton btnContratiempo = new JButton("Contratiempo");
+		btnContratiempo.setFont(new Font("Arial", Font.BOLD, 12));
+		btnContratiempo.setBounds(41, 300, 110, 50);
+		gamemodeES.add(btnContratiempo);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\fondoMenu.png"));
@@ -140,12 +200,14 @@ public class mainFront {
 		frmWungsdle.getContentPane().add(lenguaje);
 		lenguaje.setLayout(null);
 		
-		JButton btnEspaniolButton = new JButton("Espa\u00F1ol");
-		btnEspaniolButton.setBounds(657, 301, 89, 23);
+		JButton btnEspaniolButton = new JButton("");
+		btnEspaniolButton.setIcon(new ImageIcon("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\flagES.png"));
+		btnEspaniolButton.setBounds(600, 300, 200, 100);
 		lenguaje.add(btnEspaniolButton);
 		
-		JButton btnEnglishButton = new JButton("Ingles");
-		btnEnglishButton.setBounds(147, 301, 89, 23);
+		JButton btnEnglishButton = new JButton("");
+		btnEnglishButton.setIcon(new ImageIcon("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\flagEN.png"));
+		btnEnglishButton.setBounds(160, 300, 200, 100);
 		lenguaje.add(btnEnglishButton);
 		
 		JLabel lblNewLabel = new JLabel("");
