@@ -29,6 +29,7 @@ import java.awt.SystemColor;
 public class mainFront {
 	private JFrame frmWungsdle;
 	private String _lenguaje;
+	private Wordle _wordle;
 	/**
 	 * Launch the application.
 	 */
@@ -44,7 +45,6 @@ public class mainFront {
 			}
 		});
 	}
-
 	/**
 	 * Create the application.
 	 */
@@ -57,7 +57,7 @@ public class mainFront {
 	 */
 	private void initialize() {
 		frmWungsdle = new JFrame();
-		frmWungsdle.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\w-ungs,dleLogo.png"));
+		frmWungsdle.setIconImage(Toolkit.getDefaultToolkit().getImage("img/w-ungs,dleLogo.png"));
 		frmWungsdle.setResizable(false);
 		frmWungsdle.getContentPane().setEnabled(false);
 		frmWungsdle.setTitle("W-UNGS-dle");
@@ -117,6 +117,11 @@ public class mainFront {
 		menu.add(gamemodeEN);
 		
 		JButton btnMode1ButtonEN = new JButton("5 Letters");
+		btnMode1ButtonEN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Wordle w = new Wordle();
+			}
+		});
 		btnMode1ButtonEN.setFont(new Font("Arial", Font.BOLD, 12));
 		btnMode1ButtonEN.setBounds(41, 140, 110, 50);
 		gamemodeEN.add(btnMode1ButtonEN);
@@ -140,11 +145,13 @@ public class mainFront {
 		ES.setBackground(new Color(17, 149, 207));
 		ES.setBounds(0, 111, 200, 399);
 		menu.add(ES);
+		ES.setVisible(false);
 		
 		JButton btnPlayButton_1 = new JButton("Jugar");
 		btnPlayButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gamemodeES.setVisible(true);
+				_wordle = new Wordle();
 			}
 		});
 		btnPlayButton_1.setFont(new Font("Arial", Font.BOLD, 12));
@@ -190,10 +197,10 @@ public class mainFront {
 		btnContratiempo.setBounds(41, 300, 110, 50);
 		gamemodeES.add(btnContratiempo);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\fondoMenu.png"));
-		lblNewLabel_1.setBounds(0, 0, 960, 510);
-		menu.add(lblNewLabel_1);
+		JLabel imgFondo = new JLabel("");
+		imgFondo.setIcon(new ImageIcon("img/fondoMenu.png"));
+		imgFondo.setBounds(0, 0, 960, 510);
+		menu.add(imgFondo);
 		
 		JPanel lenguaje = new JPanel();
 		lenguaje.setBounds(0, 0, 954, 511);
@@ -201,17 +208,17 @@ public class mainFront {
 		lenguaje.setLayout(null);
 		
 		JButton btnEspaniolButton = new JButton("");
-		btnEspaniolButton.setIcon(new ImageIcon("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\flagES.png"));
+		btnEspaniolButton.setIcon(new ImageIcon("img/flagES.png"));
 		btnEspaniolButton.setBounds(600, 300, 200, 100);
 		lenguaje.add(btnEspaniolButton);
 		
 		JButton btnEnglishButton = new JButton("");
-		btnEnglishButton.setIcon(new ImageIcon("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\flagEN.png"));
+		btnEnglishButton.setIcon(new ImageIcon("img/flagEN.png"));
 		btnEnglishButton.setBounds(160, 300, 200, 100);
 		lenguaje.add(btnEnglishButton);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\srver\\Desktop\\UNGS\\Programacion III\\WUNGSDLE\\img\\fondoGeneral.png"));
+		lblNewLabel.setIcon(new ImageIcon("img/fondoGeneral.png"));
 		lblNewLabel.setBounds(0, 0, 960, 510);
 		lenguaje.add(lblNewLabel);
 		

@@ -1,7 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-
-
 
 public class Wordle {
 	private ArrayList<String> _palabras;
@@ -11,15 +11,52 @@ public class Wordle {
 
 	public Wordle(){
 		_palabras = new ArrayList<String>();
-		_palabras.add("COSAS");
-		_palabras.add("ABEJA");
-		_palabras.add("GALGO");
-		_palabras.add("SABIO");
-		_palabras.add("XENON");
-		set_turnos(6);
-		obtenerPalabra();
+		getPalabra();
 	}
 	
+	private String elegirPalabra() {
+		
+		try {
+			
+			//Uso File Reader para leer el archivo.
+			
+			FileReader entrada= new FileReader("Palabras.txt");
+				
+				BufferedReader mibuffer= new BufferedReader(entrada);
+					
+				String linea="";
+				
+				int posicionAleatoria = (int)Math.floor(Math.random()*(121));
+				
+				boolean encontrePalabra= false;
+			
+				int i= 0;
+				
+				while(!encontrePalabra) {
+						
+					linea= mibuffer.readLine();
+						
+					if( i == posicionAleatoria) {
+						encontrePalabra= true;
+					}
+					
+					else
+						i++;
+				}
+			
+				return linea != null? linea.toUpperCase(): "";
+				
+        } catch (IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+        }
+		return "";
+	}
+
+	public void getPalabra() {
+		_palabraElegida = elegirPalabra();
+	}
+		
 	public String ganar() {
 		return "Ganaste";
 	}
@@ -82,13 +119,6 @@ public class Wordle {
 			caracter++;
 		}
 		return false;
-	}
-
-	public String obtenerPalabra() {
-		Random random = new Random();
-		int valor = random.nextInt(_palabras.size() + 0);
-		set_palabraElegida(_palabras.get(valor));
-		return _palabras.get(valor);
 	}
 
 	public int get_turnos() {
