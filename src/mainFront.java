@@ -57,6 +57,9 @@ public class mainFront {
 	 */
 	private void initialize() {
 		frmWungsdle = new JFrame();
+		frmWungsdle.setBackground(Color.WHITE);
+		frmWungsdle.setForeground(Color.BLACK);
+		frmWungsdle.setFont(new Font("Dialog", Font.BOLD, 20));
 		frmWungsdle.setIconImage(Toolkit.getDefaultToolkit().getImage("img/w-ungs,dleLogo.png"));
 		frmWungsdle.setResizable(false);
 		frmWungsdle.getContentPane().setEnabled(false);
@@ -69,22 +72,63 @@ public class mainFront {
 		menu.setVisible(false);
 		menu.setBounds(0, 0, 960, 510);
 		frmWungsdle.getContentPane().add(menu);
-		menu.setLayout(null);
 		
 		JPanel gamemodeEN = new JPanel();
+		gamemodeEN.setBounds(200, 0, 200, 510);
 		gamemodeEN.setVisible(false);
 		
 		JPanel EN = new JPanel();
-		EN.setVisible(false);
-		EN.setBackground(new Color(17, 149, 207));
 		EN.setBounds(0, 111, 200, 399);
+		EN.setVisible(false);
+		menu.setLayout(null);
+		
+		JPanel howToPlayEN = new JPanel();
+		howToPlayEN.setBackground(new Color(17, 149, 207));
+		howToPlayEN.setLayout(null);
+		howToPlayEN.setBounds(200, 75, 760, 350);
+		howToPlayEN.setVisible(false);
+		
+		JPanel howToPlayES = new JPanel();
+		howToPlayES.setBackground(new Color(17, 149, 207));
+		howToPlayES.setBounds(200, 75, 760, 350);
+		menu.add(howToPlayES);
+		howToPlayES.setLayout(null);
+		howToPlayES.setVisible(false);
+		
+		JLabel lblTittleES = new JLabel("Wordle");
+		lblTittleES.setFont(new Font("Times New Roman", Font.BOLD, 35));
+		lblTittleES.setBounds(310, 40, 120, 30);
+		howToPlayES.add(lblTittleES);
+		
+		JTextPane txtpnHowToPlayES = new JTextPane();
+		txtpnHowToPlayES.setText("  El jugador tiene seis intentos para adivinar una palabra que puede tener 5 letras o 7 letras, el mismo recibira pistas en funcion de las letras.\r\n Adicionalmente se puede jugar un modo Contrareloj en el cual el jugador tendra 15 segundos para adivinar la palabra. En este modo de juego si el jugador rompe el record se convertira en el nuevo Campeon del Wordle y ganara... nada, pero su nombre puede aparecer en el menu.");
+		txtpnHowToPlayES.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		txtpnHowToPlayES.setBackground(new Color(17, 149, 207));
+		txtpnHowToPlayES.setBounds(84, 100, 620, 200);
+		howToPlayES.add(txtpnHowToPlayES);
+		menu.add(howToPlayEN);
+		
+		JLabel lblTittleEN = new JLabel("Wordle");
+		lblTittleEN.setFont(new Font("Times New Roman", Font.BOLD, 35));
+		lblTittleEN.setBounds(310, 40, 120, 30);
+		howToPlayEN.add(lblTittleEN);
+		
+		JTextPane txtpnHowToPlayEN = new JTextPane();
+		txtpnHowToPlayEN.setBackground(new Color(17, 149, 207));
+		txtpnHowToPlayEN.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		txtpnHowToPlayEN.setText(" Player have six attempts to guess the word who can have 5 letters or 7 seven letters, with feedback given for each guess. \r\n Adiccionally can play a Time Trial were the player have 15 seconds to guess the word. In this gamemode if the player break the record he will the new Champion of the Wordle an be reward with... nothing, but you can put your name in the menu.\r\n");
+		txtpnHowToPlayEN.setBounds(84, 100, 620, 200);
+		howToPlayEN.add(txtpnHowToPlayEN);
+		EN.setBackground(new Color(17, 149, 207));
 		menu.add(EN);
 		EN.setLayout(null);
 		
 		JButton btnPlayButton = new JButton("Play");
 		btnPlayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				howToPlayEN.setVisible(false);
 				gamemodeEN.setVisible(true);
+				btnPlayButton.setBackground(new Color(255, 255, 255));
 			}
 		});
 		btnPlayButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -95,7 +139,7 @@ public class mainFront {
 		btnHowToPlayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gamemodeEN.setVisible(false);
-				
+				howToPlayEN.setVisible(true);
 			}
 		});
 		btnHowToPlayButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -113,13 +157,12 @@ public class mainFront {
 		EN.add(btnQuitButton);
 		gamemodeEN.setLayout(null);
 		gamemodeEN.setBackground(new Color(17, 149, 207));
-		gamemodeEN.setBounds(200, 0, 200, 510);
 		menu.add(gamemodeEN);
 		
 		JButton btnMode1ButtonEN = new JButton("5 Letters");
 		btnMode1ButtonEN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Wordle w = new Wordle();
+				_wordle = new Wordle();
 			}
 		});
 		btnMode1ButtonEN.setFont(new Font("Arial", Font.BOLD, 12));
@@ -137,13 +180,14 @@ public class mainFront {
 		gamemodeEN.add(btnContratiempoEN);
 		
 		JPanel gamemodeES = new JPanel();
+		gamemodeES.setBounds(200, 0, 200, 510);
 		gamemodeES.setVisible(false);
 		
 		JPanel ES = new JPanel();
+		ES.setBounds(0, 111, 200, 399);
 		ES.setVisible(false);
 		ES.setLayout(null);
 		ES.setBackground(new Color(17, 149, 207));
-		ES.setBounds(0, 111, 200, 399);
 		menu.add(ES);
 		ES.setVisible(false);
 		
@@ -151,6 +195,7 @@ public class mainFront {
 		btnPlayButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gamemodeES.setVisible(true);
+				howToPlayES.setVisible(false);
 				_wordle = new Wordle();
 			}
 		});
@@ -162,6 +207,7 @@ public class mainFront {
 		btnHowToPlayButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gamemodeES.setVisible(false);
+				howToPlayES.setVisible(true);
 			}
 		});
 		btnHowToPlayButton_1.setFont(new Font("Arial", Font.BOLD, 12));
@@ -178,7 +224,6 @@ public class mainFront {
 		btnQuitButton_1.setBounds(40, 190, 110, 50);
 		ES.add(btnQuitButton_1);
 		gamemodeES.setBackground(new Color(17, 149, 207));
-		gamemodeES.setBounds(200, 0, 200, 510);
 		menu.add(gamemodeES);
 		gamemodeES.setLayout(null);
 		
@@ -198,8 +243,8 @@ public class mainFront {
 		gamemodeES.add(btnContratiempo);
 		
 		JLabel imgFondo = new JLabel("");
-		imgFondo.setIcon(new ImageIcon("img/fondoMenu.png"));
 		imgFondo.setBounds(0, 0, 960, 510);
+		imgFondo.setIcon(new ImageIcon("img/fondoMenu.png"));
 		menu.add(imgFondo);
 		
 		JPanel lenguaje = new JPanel();
