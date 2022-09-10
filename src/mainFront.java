@@ -1,12 +1,19 @@
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.GridLayout;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -18,6 +25,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Label;
@@ -30,6 +38,11 @@ public class mainFront {
 	private JFrame frmWungsdle;
 	private String _lenguaje;
 	private Wordle _wordle;
+	
+	private PanelPalabras[] palabraEnArreglo = new PanelPalabras[6];
+	private PanelUsuario panelUsuario;
+	private int cant = 0;
+
 	/**
 	 * Launch the application.
 	 */
@@ -68,6 +81,8 @@ public class mainFront {
 		frmWungsdle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmWungsdle.getContentPane().setLayout(null);
 		
+		_wordle = new Wordle();
+		
 		JPanel menu = new JPanel();
 		menu.setVisible(false);
 		menu.setBounds(0, 0, 960, 510);
@@ -87,6 +102,43 @@ public class mainFront {
 		howToPlayEN.setLayout(null);
 		howToPlayEN.setBounds(200, 75, 760, 350);
 		howToPlayEN.setVisible(false);
+		
+		JPanel record = new JPanel();
+		record.setBounds(0, 400, 200, 100);
+		menu.add(record);
+		record.setBackground(new Color(17, 149, 207));
+		record.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Record:");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(57, 11, 68, 20);
+		record.add(lblNewLabel_1);
+		
+		JLabel lblName = new JLabel("");
+		lblName.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblName.setBounds(24, 51, 80, 15);
+		record.add(lblName);
+		
+		JLabel lblTime = new JLabel("");
+		lblTime.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblTime.setBounds(108, 51, 50, 15);
+		record.add(lblTime);
+		
+		JPanel play7 = new JPanel();
+		play7.setBounds(400, 50, 400, 450);
+		menu.add(play7);
+		
+		JLabel lblWordEN7 = new JLabel("");
+		play7.add(lblWordEN7);
+		play7.setVisible(false);
+		
+		JPanel play5 = new JPanel();
+		play5.setBounds(400, 50, 400, 450);
+		menu.add(play5);
+		
+		JLabel lblWordEN5 = new JLabel("");
+		play5.add(lblWordEN5);
+		play5.setVisible(false);
 		
 		JPanel howToPlayES = new JPanel();
 		howToPlayES.setBackground(new Color(17, 149, 207));
@@ -129,6 +181,9 @@ public class mainFront {
 				howToPlayEN.setVisible(false);
 				gamemodeEN.setVisible(true);
 				btnPlayButton.setBackground(new Color(255, 255, 255));
+				
+				play5.setVisible(false);
+				play7.setVisible(false);
 			}
 		});
 		btnPlayButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -140,6 +195,8 @@ public class mainFront {
 			public void actionPerformed(ActionEvent e) {
 				gamemodeEN.setVisible(false);
 				howToPlayEN.setVisible(true);
+				play5.setVisible(false);
+				play7.setVisible(false);
 			}
 		});
 		btnHowToPlayButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -162,7 +219,42 @@ public class mainFront {
 		JButton btnMode1ButtonEN = new JButton("5 Letters");
 		btnMode1ButtonEN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				_wordle = new Wordle();
+				cant = 0;
+				gamemodeEN.setVisible(false);
+				howToPlayEN.setVisible(false);
+				play7.setVisible(false);
+				play5.removeAll();
+				play5.setVisible(true);
+				
+				_wordle.palabraRandomEng5();
+				
+				play5.setLayout(new GridLayout(7, 1));
+				
+				for (int i = 0; i < 6; i++) {
+					palabraEnArreglo[i] = new PanelPalabras(5);
+					play5.add(palabraEnArreglo[i]);
+				}
+				
+				panelUsuario = new PanelUsuario();
+				panelUsuario.getBotonEnviar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String palabraUsuario = panelUsuario.getInput().getText();
+						if(_wordle.palabraValida(palabraUsuario)) {
+							dibujarPalabra(palabraUsuario.trim().toUpperCase());
+							_wordle.intento(palabraUsuario);
+						}
+						if(_wordle.get_GameOver()) {
+							JOptionPane.showMessageDialog(null,_wordle.endGame());
+							play5.setVisible(false);
+							return;
+						}
+						return;
+					}
+				});
+				
+				play5.add(panelUsuario);
+				
+				play5.revalidate();
 			}
 		});
 		btnMode1ButtonEN.setFont(new Font("Arial", Font.BOLD, 12));
@@ -170,11 +262,98 @@ public class mainFront {
 		gamemodeEN.add(btnMode1ButtonEN);
 		
 		JButton btnMode2ButtonEN = new JButton("7 Letters");
+		btnMode2ButtonEN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cant = 0;
+				gamemodeEN.setVisible(false);
+				howToPlayEN.setVisible(false);
+				play5.setVisible(false);
+				play7.removeAll();
+				play7.setVisible(true);
+				
+				_wordle.palabraRandomEng7();
+				
+				play7.setLayout(new GridLayout(7, 1));
+				
+				for (int i = 0; i < 6; i++) {
+					palabraEnArreglo[i] = new PanelPalabras(7);
+					play7.add(palabraEnArreglo[i]);
+				}
+				
+				panelUsuario = new PanelUsuario();
+				panelUsuario.getBotonEnviar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String palabraUsuario = panelUsuario.getInput().getText();
+						if(_wordle.palabraValida(palabraUsuario)) {
+							dibujarPalabra(palabraUsuario.trim().toUpperCase());
+							_wordle.intento(palabraUsuario);
+						}
+						if(_wordle.get_GameOver()) {
+							JOptionPane.showMessageDialog(null,_wordle.endGame());
+							play7.setVisible(false);
+							return;
+						}
+						return;
+					}
+				});
+				
+				play7.add(panelUsuario);
+				
+				play7.revalidate();
+			}
+		});
 		btnMode2ButtonEN.setFont(new Font("Arial", Font.BOLD, 12));
 		btnMode2ButtonEN.setBounds(41, 220, 110, 50);
 		gamemodeEN.add(btnMode2ButtonEN);
 		
 		JButton btnContratiempoEN = new JButton("Time Trial");
+		btnContratiempoEN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cant = 0;
+				gamemodeEN.setVisible(false);
+				howToPlayEN.setVisible(false);
+				play7.setVisible(false);
+				play5.removeAll();
+				play5.setVisible(true);
+				
+				_wordle.palabraRandomEng5();
+				
+				play5.setLayout(new GridLayout(7, 1));
+				
+				for (int i = 0; i < 6; i++) {
+					palabraEnArreglo[i] = new PanelPalabras(5);
+					play5.add(palabraEnArreglo[i]);
+				}
+				
+				panelUsuario = new PanelUsuario();
+				panelUsuario.getBotonEnviar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String palabraUsuario = panelUsuario.getInput().getText();
+						if(_wordle.palabraValida(palabraUsuario)) {
+							dibujarPalabra(palabraUsuario.trim().toUpperCase());
+							_wordle.intento(palabraUsuario);
+						}
+						if(_wordle.get_GameOver()) {
+							if(_wordle.rompeRecord()) {
+								String string = JOptionPane.showInputDialog("Brave new record, enter your name");
+								_wordle.nuevoRecord(string);
+								lblName.setText(_wordle.get_recordNombre());
+								lblTime.setText(_wordle.get_recordIntentos());
+								return;
+							}
+							JOptionPane.showMessageDialog(null,_wordle.endGame());
+							play5.setVisible(false);
+							return;
+						}
+						return;
+					}
+				});
+				
+				play5.add(panelUsuario);
+				
+				play5.revalidate();
+			}
+		});
 		btnContratiempoEN.setFont(new Font("Arial", Font.BOLD, 12));
 		btnContratiempoEN.setBounds(41, 300, 110, 50);
 		gamemodeEN.add(btnContratiempoEN);
@@ -229,15 +408,142 @@ public class mainFront {
 		
 		JButton btnMode1Button = new JButton("5 Letras");
 		btnMode1Button.setFont(new Font("Arial", Font.BOLD, 12));
+		btnMode1Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cant = 0;
+				gamemodeES.setVisible(false);
+				howToPlayES.setVisible(false);
+				play7.setVisible(false);
+				play5.removeAll();
+				play5.setVisible(true);
+				
+				_wordle.palabraRandomEs5();
+				
+				play5.setLayout(new GridLayout(7, 1));
+				
+				for (int i = 0; i < 6; i++) {
+					palabraEnArreglo[i] = new PanelPalabras(5);
+					play5.add(palabraEnArreglo[i]);
+				}
+				
+				panelUsuario = new PanelUsuario();
+				panelUsuario.getBotonEnviar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String palabraUsuario = panelUsuario.getInput().getText();
+						if(_wordle.palabraValida(palabraUsuario)) {
+							dibujarPalabra(palabraUsuario.trim().toUpperCase());
+							_wordle.intento(palabraUsuario);
+						}
+						if(_wordle.get_GameOver()) {
+							JOptionPane.showMessageDialog(null,_wordle.endGame());
+							play5.setVisible(false);
+							return;
+						}
+						return;
+					}
+				});
+				
+				play5.add(panelUsuario);
+				
+				play5.revalidate();
+			}
+		});
 		btnMode1Button.setBounds(41, 140, 110, 50);
 		gamemodeES.add(btnMode1Button);
 		
-		JButton btnMode2Button = new JButton("7 Ketras");
+		JButton btnMode2Button = new JButton("7 Letras");
+		btnMode2Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cant = 0;
+				gamemodeES.setVisible(false);
+				howToPlayES.setVisible(false);
+				play5.setVisible(false);
+				play7.removeAll();
+				play7.setVisible(true);
+				
+				_wordle.palabraRandomEs7();;
+				
+				play7.setLayout(new GridLayout(7, 1));
+				
+				for (int i = 0; i < 6; i++) {
+					palabraEnArreglo[i] = new PanelPalabras(7);
+					play7.add(palabraEnArreglo[i]);
+				}
+				
+				panelUsuario = new PanelUsuario();
+				panelUsuario.getBotonEnviar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String palabraUsuario = panelUsuario.getInput().getText();
+						if(_wordle.palabraValida(palabraUsuario)) {
+							dibujarPalabra(palabraUsuario.trim().toUpperCase());
+							_wordle.intento(palabraUsuario);
+						}
+						if(_wordle.get_GameOver()) {
+							JOptionPane.showMessageDialog(null,_wordle.endGame());
+							play7.setVisible(false);
+							return;
+						}
+						return;
+					}
+				});
+				
+				play7.add(panelUsuario);
+				
+				play7.revalidate();
+			}
+		});
 		btnMode2Button.setFont(new Font("Arial", Font.BOLD, 12));
 		btnMode2Button.setBounds(41, 220, 110, 50);
 		gamemodeES.add(btnMode2Button);
 		
 		JButton btnContratiempo = new JButton("Contratiempo");
+		btnContratiempo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cant = 0;
+				gamemodeES.setVisible(false);
+				howToPlayES.setVisible(false);
+				play7.setVisible(false);
+				play5.removeAll();
+				play5.setVisible(true);
+				
+				_wordle.palabraRandomEs5();
+				
+				play5.setLayout(new GridLayout(7, 1));
+				
+				for (int i = 0; i < 6; i++) {
+					palabraEnArreglo[i] = new PanelPalabras(5);
+					play5.add(palabraEnArreglo[i]);
+				}
+				
+				panelUsuario = new PanelUsuario();
+				panelUsuario.getBotonEnviar().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String palabraUsuario = panelUsuario.getInput().getText();
+						if(_wordle.palabraValida(palabraUsuario)) {
+							dibujarPalabra(palabraUsuario.trim().toUpperCase());
+							_wordle.intento(palabraUsuario);
+						}
+						if(_wordle.get_GameOver()) {
+							if(_wordle.rompeRecord()) {
+								String string = JOptionPane.showInputDialog("Felicidades rompiste el record, introduce tu nombre");
+								_wordle.nuevoRecord(string);
+								lblName.setText(_wordle.get_recordNombre());
+								lblTime.setText(_wordle.get_recordIntentos());
+								return;
+							}
+							JOptionPane.showMessageDialog(null,_wordle.endGame());
+							play5.setVisible(false);
+							return;
+						}
+						return;
+					}
+				});
+				
+				play5.add(panelUsuario);
+				
+				play5.revalidate();
+			}
+		});
 		btnContratiempo.setFont(new Font("Arial", Font.BOLD, 12));
 		btnContratiempo.setBounds(41, 300, 110, 50);
 		gamemodeES.add(btnContratiempo);
@@ -273,6 +579,9 @@ public class mainFront {
 				set_lenguaje("EN");
 				menu.setVisible(true);
 				EN.setVisible(true);
+				
+				lblName.setText(_wordle.get_recordNombre());
+				lblTime.setText(_wordle.get_recordIntentos());
 			}
 		});
 		
@@ -282,11 +591,42 @@ public class mainFront {
 				set_lenguaje("ES");
 				menu.setVisible(true);
 				ES.setVisible(true);
+				
+				lblName.setText(_wordle.get_recordNombre());
+				lblTime.setText(_wordle.get_recordIntentos());
 			}
 		});
 		
 	}
 
+	private boolean dibujarPalabra(String palabraUsuario) {
+		List<String> palabraModelo = Arrays.asList(_wordle.get_palabraOriginal().split(""));
+		String[] palabraDada = palabraUsuario.split("");
+		List<Boolean> wordMatchesList = new ArrayList<>();
+		
+		for (int i = 0; i < palabraModelo.size(); i++) {
+			if (palabraModelo.contains(palabraDada[i])) {
+				if (palabraModelo.get(i).equals(palabraDada[i])) {
+					getActivePanel().textoEnPanel(palabraDada[i], i, Color.GREEN);
+					wordMatchesList.add(true);
+				} else {
+					getActivePanel().textoEnPanel(palabraDada[i], i, Color.YELLOW);
+					wordMatchesList.add(false);
+				}
+			} 
+			else {
+				getActivePanel().textoEnPanel(palabraDada[i], i, Color.GRAY);
+				wordMatchesList.add(false);
+			}
+		}
+		this.cant++;
+		return !wordMatchesList.contains(false);
+	}
+	
+	public PanelPalabras getActivePanel() {
+		return this.palabraEnArreglo[cant];
+	}
+	
 	public String get_lenguaje() {
 		return _lenguaje;
 	}

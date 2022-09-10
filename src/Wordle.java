@@ -1,90 +1,84 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+
+import java.util.Random;
 
 public class Wordle {
-	private ArrayList<String> _palabras;
-	private String _palabraElegida;
-	private String _palabraActual;
-	private int _turnos;
-
-	public Wordle(){
-		_palabras = new ArrayList<String>();
-		getPalabra();
+	
+	private String[] palabrasEsp=new String[]{"casak","patos","gaseo","marce","dubai"};
+	private String[] palabrasEspSieteLetras=new String[]{"casaksa","patossa","gaseosa","marcesa","dubaisa"};
+	private String[] palabrasEng=new String[]{"banks","board","glows","group","queen"};
+	private String[] palabrasEngSieteLetras=new String[]{"banksas","boardsa","glowssa","groupsa","queesan"};
+	private String palabraOriginal;
+	private int intentos;
+	private Boolean GameOver;
+	private Boolean Ganador;
+	private int longitud;
+	
+	private String _recordNombre;
+	private int _recordIntento;
+	
+	public boolean get_Ganador() {
+		return Ganador;
 	}
 	
-	private String elegirPalabra() {
+	public boolean get_GameOver() {
+		return GameOver;
+	}
+	
+	public String get_palabraOriginal() {
+		return palabraOriginal.toUpperCase();
+	}
+	
+	public Wordle () {	
+		this.intentos = 0;
+		this.GameOver= false;
+		this.Ganador= false;
+		this.set_recordNombre("Anonimo");
+		this.set_recordTiempo(3);
+	}
+	
+	public boolean palabraValida(String palabraIngresada) {
+		if (palabraIngresada.length() == palabraOriginal.length()) {
+			return true;			
+		}
+		return false;
+	}
+	
+	public void intento (String palabraIngresada) {		
+		System.out.println(this.palabraOriginal);
+		if (GameOver == false && Ganador == false) {		
+		palabraIngresada.toLowerCase();		
+		if (palabraIngresada.length() != palabraOriginal.length()) {
+				throw new RuntimeException("Deben ser "+ palabraOriginal.length() +" caracteres");			
+		}		
+		for (int i = 0; i < palabraIngresada.length(); i++) {
+			if (palabraIngresada.charAt(i) < 97 || palabraIngresada.charAt(i) > 122) { // se fija si la palabra contiene																						// unicamente letras
+				throw new RuntimeException("No es una palabra valida");
+			}}		
+		if (intentos == 6) {
+			this.GameOver=true;
+		}		
+		if (palabraIngresada.equals(this.palabraOriginal)) {
+			this.Ganador=true;
+			this.GameOver=true;
+		}		
+		intentos++;
+		mostrarEstado(palabraIngresada);		
+		}
+	}
 		
-		try {
-			
-			//Uso File Reader para leer el archivo.
-			
-			FileReader entrada= new FileReader("Palabras.txt");
-				
-				BufferedReader mibuffer= new BufferedReader(entrada);
-					
-				String linea="";
-				
-				int posicionAleatoria = (int)Math.floor(Math.random()*(121));
-				
-				boolean encontrePalabra= false;
-			
-				int i= 0;
-				
-				while(!encontrePalabra) {
-						
-					linea= mibuffer.readLine();
-						
-					if( i == posicionAleatoria) {
-						encontrePalabra= true;
-					}
-					
-					else
-						i++;
-				}
-			
-				return linea != null? linea.toUpperCase(): "";
-				
-        } catch (IOException e) {
-			e.printStackTrace();
-			e.getMessage();
-        }
-		return "";
-	}
-
-	public void getPalabra() {
-		_palabraElegida = elegirPalabra();
-	}
-		
-	public String ganar() {
-		return "Ganaste";
-	}
-	
-	public String perder() {
-		return "Perdiste";
-	}
-	
-	public String arriesgarPalabra(String entrada) {
-		if(entrada.length()>5) {
-			return "La palabra debe tener 5 letras"; 
-		}
-		entrada = entrada.toUpperCase();
-		if(entrada.equals(get_palabraElegida())) {
-			return ganar();
-		}
-		else {
-			set_turnos(get_turnos()-1);
-			return mostrarEstado(entrada);
-		}
-	}
+	public String endGame() {
+		if (Ganador == true) {
+			return "Ganaste";
+		}		
+		return "Perdiste";		
+	}	
 	
 	public String mostrarEstado(String entrada) {
 		int caracter=0;
 		StringBuilder string = new StringBuilder();
 		while(caracter<entrada.length()) {
-			if(contiene(entrada.charAt(caracter))) {
-				if(contiene(entrada.charAt(caracter), caracter)) {
+			if(contieneLaLetra(entrada.charAt(caracter))) {
+				if(contieneLaLetra(entrada.charAt(caracter), caracter)) {
 					string.append(entrada.charAt(caracter));
 				}
 				else {
@@ -98,11 +92,11 @@ public class Wordle {
 		}
 		return string.toString();
 	}
-
-	private boolean contiene(char charAt, int index) {
+			
+	private boolean contieneLaLetra(char letra, int index) {
 		int caracter = 0;
-		while(caracter < get_palabraElegida().length()) {
-			if(get_palabraElegida().charAt(caracter) == charAt && caracter == index) {
+		while(caracter < this.palabraOriginal.length()) {
+			if(this.palabraOriginal.charAt(caracter) == letra && caracter == index) {
 				return true;
 			}
 			caracter++;
@@ -110,38 +104,94 @@ public class Wordle {
 		return false;
 	}
 	
-	private boolean contiene(char charAt) {
+	private boolean contieneLaLetra(char letra) {
 		int caracter = 0;
-		while(caracter < get_palabraElegida().length()) {
-			if(get_palabraElegida().charAt(caracter) == charAt) {
+		while(caracter < this.palabraOriginal.length()) {
+			if(this.palabraOriginal.charAt(caracter) == letra) {
 				return true;
 			}
 			caracter++;
 		}
 		return false;
+	}	
+	
+	public boolean hayGanador () {
+		return this.Ganador;
+	}
+	
+	public boolean HayPerdedor() {
+		return this.GameOver;
+	}	
+	
+	public void palabraRandomEs5 () {	
+		Random random = new Random();
+		int numeroAleatorio = random.nextInt(palabrasEsp.length);
+		
+		this.palabraOriginal = palabrasEsp[numeroAleatorio];
+	}
+	
+	public void palabraRandomEs7 () {
+		Random random = new Random();
+		int numeroAleatorio = random.nextInt(palabrasEspSieteLetras.length);
+		this.palabraOriginal = palabrasEspSieteLetras[numeroAleatorio];
+	}
+	
+	public void palabraRandomEng5 () {	
+		Random random = new Random();
+		int numeroAleatorio = random.nextInt(palabrasEng.length);
+		
+		this.palabraOriginal = palabrasEng[numeroAleatorio];
+	}
+	
+	public void palabraRandomEng7 () {
+		Random random = new Random();
+		int numeroAleatorio = random.nextInt(palabrasEngSieteLetras.length);
+		this.palabraOriginal = palabrasEngSieteLetras[numeroAleatorio];
+	}
+	
+	public Boolean compararLetras (String palabraElegida, char letra) {
+		for (int i = 0; i < palabraElegida.length(); i++) {	
+			if (palabraElegida.charAt(i)== letra) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Boolean letraIgual(String palabraOriginal, String palabraIngresada, int indice) {
+		if (palabraOriginal.charAt(indice) == palabraIngresada.charAt(indice)) {
+			return true;
+		}
+		return false;
 	}
 
-	public int get_turnos() {
-		return _turnos;
+	public String get_recordNombre() {
+		return _recordNombre;
 	}
 
-	public void set_turnos(int _turnos) {
-		this._turnos = _turnos;
+	public void set_recordNombre(String _recordNombre) {
+		this._recordNombre = _recordNombre;
 	}
 
-	public String get_palabraElegida() {
-		return _palabraElegida;
+	public String get_recordIntentos() {
+		StringBuilder string = new StringBuilder();
+		return string.append(_recordIntento).toString();
 	}
 
-	public void set_palabraElegida(String _palabraElegida) {
-		this._palabraElegida = _palabraElegida;
+	public void set_recordTiempo(int _recordTiempo) {
+		this._recordIntento = _recordTiempo;
 	}
 
-	public String get_palabraActual() {
-		return _palabraActual;
+	public boolean rompeRecord() {
+		if(this._recordIntento > intentos) {
+			return true;
+		}
+		return false;
 	}
 
-	public void set_palabraActual(String _palabraActual) {
-		this._palabraActual = _palabraActual;
+	public void nuevoRecord(String record) {
+		this._recordNombre = record;
+		this._recordIntento = intentos;
 	}
+	
 }
