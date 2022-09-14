@@ -1,32 +1,15 @@
 
-import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
-public class Wordle {
-	
-	private String[] palabrasEsp=new String[]{"casak","patos","gaseo","marce","dubai"};
-	private String[] palabrasEspSieteLetras=new String[]{"casaksa","patossa","gaseosa","marcesa","dubaisa"};
-	private String[] palabrasEng=new String[]{"banks","board","glows","group","queen"};
-	private String[] palabrasEngSieteLetras=new String[]{"banksas","boardsa","glowssa","groupsa","queesan"};
+public class Wordle {	
 	private String palabraOriginal;
 	private int intentos;
 	private Boolean GameOver;
-	private Boolean Ganador;
-	private int longitud;
-	
+	private Boolean Ganador;	
 	private String _recordNombre;
 	private int _recordIntento;
-	
-	public boolean get_Ganador() {
-		return Ganador;
-	}
-	
-	public boolean get_GameOver() {
-		return GameOver;
-	}
-	
-	public String get_palabraOriginal() {
-		return palabraOriginal.toUpperCase();
-	}
 	
 	public Wordle () {	
 		this.intentos = 0;
@@ -44,14 +27,13 @@ public class Wordle {
 	}
 	
 	public void intento (String palabraIngresada) {		
-		System.out.println(this.palabraOriginal);
 		if (GameOver == false && Ganador == false) {		
 		palabraIngresada.toLowerCase();		
 		if (palabraIngresada.length() != palabraOriginal.length()) {
 				throw new RuntimeException("Deben ser "+ palabraOriginal.length() +" caracteres");			
 		}		
 		for (int i = 0; i < palabraIngresada.length(); i++) {
-			if (palabraIngresada.charAt(i) < 97 || palabraIngresada.charAt(i) > 122) { // se fija si la palabra contiene																						// unicamente letras
+			if (palabraIngresada.charAt(i) < 97 || palabraIngresada.charAt(i) > 122) { 																					// unicamente letras
 				throw new RuntimeException("No es una palabra valida");
 			}}		
 		if (intentos == 6) {
@@ -124,29 +106,95 @@ public class Wordle {
 	}	
 	
 	public void palabraRandomEs5 () {	
-		Random random = new Random();
-		int numeroAleatorio = random.nextInt(palabrasEsp.length);
-		
-		this.palabraOriginal = palabrasEsp[numeroAleatorio];
+		try {			
+			FileReader entrada= new FileReader("txt/palbras5LetrasES.txt");				
+			BufferedReader mibuffer= new BufferedReader(entrada);					
+				String linea="";				
+				int posicionAleatoria = (int)Math.floor(Math.random()*(121));				
+				boolean encontrePalabra= false;			
+				int i= 0;				
+				while(!encontrePalabra) {						
+					linea= mibuffer.readLine();						
+					if( i == posicionAleatoria) {
+						encontrePalabra= true;
+					}					
+					else
+						i++;
+				}		
+				this.palabraOriginal = linea;				
+        } catch (IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+        }
 	}
 	
 	public void palabraRandomEs7 () {
-		Random random = new Random();
-		int numeroAleatorio = random.nextInt(palabrasEspSieteLetras.length);
-		this.palabraOriginal = palabrasEspSieteLetras[numeroAleatorio];
-	}
-	
-	public void palabraRandomEng5 () {	
-		Random random = new Random();
-		int numeroAleatorio = random.nextInt(palabrasEng.length);
-		
-		this.palabraOriginal = palabrasEng[numeroAleatorio];
+		try {			
+			FileReader entrada= new FileReader("txt/palbras7LetrasES.txt");				
+			BufferedReader mibuffer= new BufferedReader(entrada);					
+				String linea="";				
+				int posicionAleatoria = (int)Math.floor(Math.random()*(121));				
+				boolean encontrePalabra= false;			
+				int i= 0;				
+				while(!encontrePalabra) {						
+					linea= mibuffer.readLine();						
+					if( i == posicionAleatoria) {
+						encontrePalabra= true;
+					}					
+					else
+						i++;
+				}		
+				this.palabraOriginal = linea;				
+        } catch (IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+        }
 	}
 	
 	public void palabraRandomEng7 () {
-		Random random = new Random();
-		int numeroAleatorio = random.nextInt(palabrasEngSieteLetras.length);
-		this.palabraOriginal = palabrasEngSieteLetras[numeroAleatorio];
+		try {			
+			FileReader entrada= new FileReader("txt/palbras7LetrasEN.txt");				
+			BufferedReader mibuffer= new BufferedReader(entrada);					
+				String linea="";				
+				int posicionAleatoria = (int)Math.floor(Math.random()*(121));				
+				boolean encontrePalabra= false;			
+				int i= 0;				
+				while(!encontrePalabra) {						
+					linea= mibuffer.readLine();						
+					if( i == posicionAleatoria) {
+						encontrePalabra= true;
+					}					
+					else
+						i++;
+				}		
+				this.palabraOriginal = linea;				
+        } catch (IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+        }
+	}
+	
+	public void palabraRandomEng5() {		
+		try {			
+			FileReader entrada= new FileReader("txt/palbras5LetrasEN.txt");				
+			BufferedReader mibuffer= new BufferedReader(entrada);					
+				String linea="";				
+				int posicionAleatoria = (int)Math.floor(Math.random()*(121));				
+				boolean encontrePalabra= false;			
+				int i= 0;				
+				while(!encontrePalabra) {						
+					linea= mibuffer.readLine();						
+					if( i == posicionAleatoria) {
+						encontrePalabra= true;
+					}					
+					else
+						i++;
+				}		
+				this.palabraOriginal = linea;				
+        } catch (IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+        }
 	}
 	
 	public Boolean compararLetras (String palabraElegida, char letra) {
@@ -192,6 +240,18 @@ public class Wordle {
 	public void nuevoRecord(String record) {
 		this._recordNombre = record;
 		this._recordIntento = intentos;
+	}
+	
+	public boolean get_Ganador() {
+		return Ganador;
+	}
+	
+	public boolean get_GameOver() {
+		return GameOver;
+	}
+	
+	public String get_palabraOriginal() {
+		return palabraOriginal.toUpperCase();
 	}
 	
 }

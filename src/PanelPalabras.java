@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+@SuppressWarnings("serial")
 class PanelPalabras extends JPanel {
-
 	JLabel[] palabraEnColumnas;
 
 	public PanelPalabras(int j) {

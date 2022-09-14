@@ -33,7 +33,6 @@ import java.awt.Rectangle;
 import java.awt.ComponentOrientation;
 import java.awt.SystemColor;
 
-
 public class mainFront {
 	private JFrame frmWungsdle;
 	private String _lenguaje;
@@ -73,7 +72,7 @@ public class mainFront {
 		frmWungsdle.setBackground(Color.WHITE);
 		frmWungsdle.setForeground(Color.BLACK);
 		frmWungsdle.setFont(new Font("Dialog", Font.BOLD, 20));
-		frmWungsdle.setIconImage(Toolkit.getDefaultToolkit().getImage("img/w-ungs,dleLogo.png"));
+		frmWungsdle.setIconImage(Toolkit.getDefaultToolkit().getImage("img/logoMenu.png"));
 		frmWungsdle.setResizable(false);
 		frmWungsdle.getContentPane().setEnabled(false);
 		frmWungsdle.setTitle("W-UNGS-dle");
@@ -153,6 +152,7 @@ public class mainFront {
 		howToPlayES.add(lblTittleES);
 		
 		JTextPane txtpnHowToPlayES = new JTextPane();
+		txtpnHowToPlayES.setEditable(false);
 		txtpnHowToPlayES.setText("  El jugador tiene seis intentos para adivinar una palabra que puede tener 5 letras o 7 letras, el mismo recibira pistas en funcion de las letras.\r\n Adicionalmente se puede jugar un modo Contrareloj en el cual el jugador tendra 15 segundos para adivinar la palabra. En este modo de juego si el jugador rompe el record se convertira en el nuevo Campeon del Wordle y ganara... nada, pero su nombre puede aparecer en el menu.");
 		txtpnHowToPlayES.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtpnHowToPlayES.setBackground(new Color(17, 149, 207));
@@ -166,6 +166,7 @@ public class mainFront {
 		howToPlayEN.add(lblTittleEN);
 		
 		JTextPane txtpnHowToPlayEN = new JTextPane();
+		txtpnHowToPlayEN.setEditable(false);
 		txtpnHowToPlayEN.setBackground(new Color(17, 149, 207));
 		txtpnHowToPlayEN.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		txtpnHowToPlayEN.setText(" Player have six attempts to guess the word who can have 5 letters or 7 seven letters, with feedback given for each guess. \r\n Adiccionally can play a Time Trial were the player have 15 seconds to guess the word. In this gamemode if the player break the record he will the new Champion of the Wordle an be reward with... nothing, but you can put your name in the menu.\r\n");
@@ -306,7 +307,7 @@ public class mainFront {
 		btnMode2ButtonEN.setBounds(41, 220, 110, 50);
 		gamemodeEN.add(btnMode2ButtonEN);
 		
-		JButton btnContratiempoEN = new JButton("Time Trial");
+		JButton btnContratiempoEN = new JButton("Chalenge");
 		btnContratiempoEN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cant = 0;
@@ -496,7 +497,7 @@ public class mainFront {
 		btnMode2Button.setBounds(41, 220, 110, 50);
 		gamemodeES.add(btnMode2Button);
 		
-		JButton btnContratiempo = new JButton("Contratiempo");
+		JButton btnContratiempo = new JButton("Desafio");
 		btnContratiempo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cant = 0;
