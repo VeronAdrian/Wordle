@@ -183,6 +183,8 @@ public class mainFront {
 				gamemodeEN.setVisible(true);
 				btnPlayButton.setBackground(new Color(255, 255, 255));
 				
+				_wordle = new Wordle();
+				
 				play5.setVisible(false);
 				play7.setVisible(false);
 			}
@@ -307,7 +309,7 @@ public class mainFront {
 		btnMode2ButtonEN.setBounds(41, 220, 110, 50);
 		gamemodeEN.add(btnMode2ButtonEN);
 		
-		JButton btnContratiempoEN = new JButton("Chalenge");
+		JButton btnContratiempoEN = new JButton("Challenge");
 		btnContratiempoEN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cant = 0;
@@ -388,6 +390,9 @@ public class mainFront {
 			public void actionPerformed(ActionEvent e) {
 				gamemodeES.setVisible(false);
 				howToPlayES.setVisible(true);
+			
+				play5.setVisible(false);
+				play7.setVisible(false);
 			}
 		});
 		btnHowToPlayButton_1.setFont(new Font("Arial", Font.BOLD, 12));

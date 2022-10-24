@@ -12,7 +12,7 @@ public class Wordle {
 	private int _recordIntento;
 	
 	public Wordle () {	
-		this.intentos = 0;
+		this.intentos = 1;
 		this.GameOver= false;
 		this.Ganador= false;
 		this.set_recordNombre("Anonimo");
@@ -36,11 +36,11 @@ public class Wordle {
 			if (palabraIngresada.charAt(i) < 97 || palabraIngresada.charAt(i) > 122) { 																					// unicamente letras
 				throw new RuntimeException("No es una palabra valida");
 			}}		
-		if (intentos == 6) {
-			this.GameOver=true;
-		}		
 		if (palabraIngresada.equals(this.palabraOriginal)) {
 			this.Ganador=true;
+			this.GameOver=true;
+		}		
+		else if (intentos == 6) {
 			this.GameOver=true;
 		}		
 		intentos++;
